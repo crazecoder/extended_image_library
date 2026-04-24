@@ -284,7 +284,7 @@ class ExtendedNetworkImageProvider
   Future<HttpClientResponse> _getResponse(Uri resolved) async {
     final HttpClientRequest request = await httpClient.getUrl(resolved);
     headers?.forEach((String name, String value) {
-      request.headers.add(name, value);
+      request.headers.set(name, value);
     });
     final HttpClientResponse response = await request.close();
     if (timeLimit != null) {
@@ -366,8 +366,7 @@ class ExtendedNetworkImageProvider
   // We set `autoUncompress` to false to ensure that we can trust the value of
   // the `Content-Length` HTTP header. We automatically uncompress the content
   // in our call to [consolidateHttpClientResponseBytes].
-  static final HttpClient _sharedHttpClient =
-      HttpClient()..autoUncompress = false;
+  static final HttpClient _sharedHttpClient = HttpClient();
 
   static HttpClient get httpClient {
     HttpClient client = _sharedHttpClient;
